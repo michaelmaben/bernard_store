@@ -1,4 +1,4 @@
-class SalesTax < Tax
+class SalesTaxCalculator < TaxCalculator
   include JSONFileLoader
 
   def initialize

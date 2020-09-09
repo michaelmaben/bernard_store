@@ -17,7 +17,7 @@ module JSONFileLoader
     @product_markdowns = Hash.new
     markdowns.map do |product|
       @product_markdowns[product["item"]] = {
-        markdown: product["markdown"]
+        markup: product["markup"]
       }
     end
     @product_markdowns

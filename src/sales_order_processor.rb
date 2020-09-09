@@ -1,9 +1,9 @@
 require 'json'
 
-class SalesOrder
+class SalesOrderProcessor
   include JSONFileLoader
   def initialize
-    @tax_calculator = TaxCalculator.new(SalesTax.new)
+    @sales_tax_processor = TaxProcessor.new(SalesTaxCalculator.new)
     orders_file = File.read('orders.json')
 
     @orders = JSON.parse(orders_file)
@@ -21,11 +21,11 @@ class SalesOrder
                     product_detail[:product_name],
                     product_detail[:cost_price]
                   )
-        markdowns = @product_markdowns[order["item"]][:markdown]
+        markups = @product_markdowns[order["item"]][:markup]
         marked_price = (item.cost_price.to_f +
-          markdowns[order["county"]].to_f * item.cost_price.to_f) * order["qty"].to_i
+          markups[order["county"]].to_f * item.cost_price.to_f) * order["qty"].to_i
         #pass salestax calculator to tax_calculator
-        computed_tax = @tax_calculator.compute_tax(marked_price, order["county"], order["state"])
+        computed_tax = @sales_tax_processor.compute_tax(marked_price, order["county"], order["state"])
         profit = marked_price - ((item.cost_price.to_f * order["qty"].to_i) + computed_tax)
         total_profit += profit
       end

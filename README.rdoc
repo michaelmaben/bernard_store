@@ -1,0 +1,84 @@
+All configurations are in the json files:
+
+sales_tax.json: This allows user to configure tax for a specific county
+{
+  "county": "Miami-Dade",
+  "rate": "0.06"
+}
+
+product_list.json: This file allows the user to configure product details - cost etc.
+
+{
+  "item": "1",
+  "brand_name": "Bernards",
+  "product_name": "Product-A",
+  "cost_price": "30.0"
+}
+
+product_markdowns.json: This file allows user to configure markup prices for a product in a county.
+
+{
+  "item": "1",
+  "markup": {
+    "Broward": "0.3",
+    "Miami-Dade": "0.25",
+    "Palm-Beach": "0.3"
+  }
+}
+
+orders.json: This file is example of all orders to be processed.
+The example is for the scenario defined in the code assessment.
+
+[
+  {
+    "item": "1",
+    "qty": "100",
+    "county": "Miami-Dade",
+    "state": "FL"
+  },
+  {
+    "item": "1",
+    "qty": "100",
+    "county": "Palm-Beach",
+    "state": "FL"
+  },
+  {
+    "item": "1",
+    "qty": "100",
+    "county": "Broward",
+    "state": "FL"
+  }
+]
+
+The design is simple keeping in mind the separation of concerns between the classes representing product and tax
+They follow Single Responsibility Principle.
+
+Taxes is managed by the following classes:
+TaxCalculator: This is the base class that all other tax calculators will inherit. It has a compute_tax method,
+the implementation for this method will be the responsibility of the derived classes where the algorithm to
+calculate a specific type of tax is implemented.
+
+SalesTaxCalculator: This class computes the sales tax. The class inherits from TaxCalculator. The compute_tax
+method uses the configuration details in sales_tax.json to determine the tax rate in a given county and calculates
+the sales tax.
+
+TaxProcessor: This class provides an interface to any TaxCalculator implementations. The initialize method takes
+a TaxCalculator instance and in future if there are other implementations of TaxCalculator (for example a sales tax
+calculator for states/countries)
+
+Product: Class to represent a product.
+
+SalesOrderProcessor: This class implements the logic to load all the orders and calculate the total profit.
+
+
+Steps to run the program:
+
+1> Create a directory and run : git clone https://github.com/michaelmaben/bernard_store.git
+2> bundle install
+3> Open a irb console and run: load './loader.rb'
+4> Run load_all
+5> Run the following commands:
+ sales_processor = SalesOrderProcessor.new
+ sales_processor.calculate_profit
+
+The program should display the profit for the given orders in orders.json

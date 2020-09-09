@@ -1,10 +1,8 @@
+require 'json'
+
+# Base class for all tax calculators
 class TaxCalculator
-  def initialize(tax_calculator)
-    @tax_calculator = tax_calculator
-  end
-
   def compute_tax(marked_price, county, state)
-    @tax_calculator.compute_tax(marked_price, county, state)
+    raise "this method should be overridden"
   end
-
 end
