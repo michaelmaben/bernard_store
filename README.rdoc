@@ -1,4 +1,4 @@
-All configurations are in the json files:
+All application configurations are in the following json files:
 
 sales_tax.json: This allows user to configure tax for a specific county
 {
@@ -16,6 +16,7 @@ product_list.json: This file allows the user to configure product details - cost
 }
 
 product_markdowns.json: This file allows user to configure markup prices for a product in a county.
+Changes to markup prices in the future can be updated here without changing code.
 
 {
   "item": "1",
@@ -62,22 +63,24 @@ SalesTaxCalculator: This class computes the sales tax. The class inherits from T
 method uses the configuration details in sales_tax.json to determine the tax rate in a given county and calculates
 the sales tax.
 
-TaxProcessor: This class provides an interface to any TaxCalculator implementations. The initialize method takes
-a TaxCalculator instance and in future if there are other implementations of TaxCalculator (for example a sales tax
+TaxProcessor: This class provides an interface to all TaxCalculator implementations. The initialize method takes
+a TaxCalculator instance and in future if there are new implementations of TaxCalculator (for example a sales tax
 calculator for states/countries)
 
 Product: Class to represent a product.
 
 SalesOrderProcessor: This class implements the logic to load all the orders and calculate the total profit.
 
+JSONFileLoader: This module has all the helper methods to load configuration json files.
 
 Steps to run the program:
 
 1> Create a directory and run : git clone https://github.com/michaelmaben/bernard_store.git
-2> bundle install
-3> Open a irb console and run: load './loader.rb'
-4> Run load_all
-5> Run the following commands:
+2> cd bernard_store
+3> bundle install
+4> Open a irb console and run: load './loader.rb'
+5> Run load_all
+6> Run the following commands:
  sales_processor = SalesOrderProcessor.new
  sales_processor.calculate_profit
 

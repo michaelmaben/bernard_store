@@ -3,30 +3,32 @@ require 'json'
 class SalesOrderProcessor
   include JSONFileLoader
   def initialize
+    #pass salestax calculator to tax_processor
     @sales_tax_processor = TaxProcessor.new(SalesTaxCalculator.new)
     orders_file = File.read('orders.json')
 
-    @orders = JSON.parse(orders_file)
+    @orders = JSON.parse(orders_file, :symbolize_names => true)
     @product_details  = load_products_from_file
     @product_markdowns = load_product_markdown_from_file
   end
 
   def calculate_profit
-      #iterate sales order
+      #iterate sales orders
       total_profit = 0
       for i in 0..@orders.length-1
         order = @orders[i]
-        product_detail = @product_details[order["item"]]
+        product_detail = @product_details[order[:item]]
         item = Product.new(product_detail[:brand_name],
                     product_detail[:product_name],
                     product_detail[:cost_price]
                   )
-        markups = @product_markdowns[order["item"]][:markup]
+        #get markup percentages for the product
+        markups = @product_markdowns[order[:item]][:markup]
         marked_price = (item.cost_price.to_f +
-          markups[order["county"]].to_f * item.cost_price.to_f) * order["qty"].to_i
-        #pass salestax calculator to tax_calculator
-        computed_tax = @sales_tax_processor.compute_tax(marked_price, order["county"], order["state"])
-        profit = marked_price - ((item.cost_price.to_f * order["qty"].to_i) + computed_tax)
+          markups[order[:county]].to_f * item.cost_price.to_f) * order[:qty].to_i
+        computed_tax = @sales_tax_processor.compute_tax(marked_price, order[:county], order[:state])
+        profit = marked_price - ((item.cost_price.to_f * order[:qty].to_i) + computed_tax)
+        puts "Profit for item #{order[:item]} sold in #{order[:county]} for quantity #{order[:qty]} is #{profit}"
         total_profit += profit
       end
       puts "Total Profit :: #{total_profit.round(2)}$"
