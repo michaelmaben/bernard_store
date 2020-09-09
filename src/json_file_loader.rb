@@ -1,3 +1,4 @@
+require 'json'
 module JSONFileLoader
   def load_products_from_file
     products = JSON.parse(File.read('product_list.json'))

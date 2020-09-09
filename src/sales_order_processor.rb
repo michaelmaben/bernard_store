@@ -1,5 +1,3 @@
-require 'json'
-
 class SalesOrderProcessor
   include JSONFileLoader
   def initialize

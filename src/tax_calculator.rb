@@ -1,5 +1,3 @@
-require 'json'
-
 # Base class for all tax calculators
 class TaxCalculator
   def compute_tax(marked_price, county, state)
