@@ -1,0 +1,20 @@
+[
+  {
+    "item": "1",
+    "qty": "100",
+    "county": "Miami-Dade",
+    "state": "FL"
+  },
+  {
+    "item": "1",
+    "qty": "100",
+    "county": "Palm-Beach",
+    "state": "FL"
+  },
+  {
+    "item": "1",
+    "qty": "100",
+    "county": "Broward",
+    "state": "FL"
+  }
+]

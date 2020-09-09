@@ -1,0 +1,14 @@
+[
+  {
+    "county": "Miami-Dade",
+    "rate": "0.06"
+  },
+  {
+    "county": "Broward",
+    "rate": "0.07"
+  },
+  {
+    "county": "Palm-Beach",
+    "rate": "0.08"
+  }
+]

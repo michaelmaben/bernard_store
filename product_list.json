@@ -1,0 +1,20 @@
+[
+  {
+    "item": "1",
+    "brand_name": "Bernards",
+    "product_name": "Product-A",
+    "cost_price": "30.0"
+  },
+  {
+    "item": "2",
+    "brand_name": "Bernards",
+    "product_name": "Product-B",
+    "cost_price": "20.0"
+  },
+  {
+    "item": "3",
+    "brand_name": "Bernards",
+    "product_name": "Product-A",
+    "cost_price": "20.0"
+  }
+]
