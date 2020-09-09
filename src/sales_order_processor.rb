@@ -9,7 +9,7 @@ class SalesOrderProcessor
 
     @orders = JSON.parse(orders_file, :symbolize_names => true)
     @product_details  = load_products_from_file
-    @product_markdowns = load_product_markdown_from_file
+    @product_markdowns = load_product_markups_from_file
   end
 
   def calculate_profit
